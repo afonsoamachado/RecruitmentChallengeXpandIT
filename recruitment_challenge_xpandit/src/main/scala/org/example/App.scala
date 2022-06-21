@@ -14,7 +14,7 @@ import org.example.utils.Utils
 
 object App extends App {
 
-  //Unified entry point of a spark application from Spark 2.0
+  //Unified entry point of a spark application
   val spark = SparkSession.builder()
     .master("local[2]")
     .appName("RecruitmentChallenge")
@@ -44,6 +44,7 @@ object App extends App {
     .write
     .mode(SaveMode.Overwrite)
     .option("header", value = true)
+    .option("delimiter", "§")
     .format("csv")
     .save("src/main/scala/org/example/results/best_apps.csv")
 
