@@ -1,4 +1,4 @@
-# Recruitment Challenge
+# Spark 2 Recruitment Challenge
 
 Recruitment challenge for the company [Xpand IT](https://www.xpand-it.com).
 

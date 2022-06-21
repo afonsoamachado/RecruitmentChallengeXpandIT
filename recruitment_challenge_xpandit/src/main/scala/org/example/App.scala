@@ -2,6 +2,8 @@
  * Spark 2 Recruitment Challenge
  * Xpand it
  *
+ * Main application.
+ *
  * Author: Afonso Machado
  */
 package org.example
