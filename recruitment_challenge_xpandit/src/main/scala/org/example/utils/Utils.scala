@@ -42,10 +42,11 @@ object Utils {
   }
 
   /**
-   *  App unique value.
-   *  In case of App duplicates, the column "Categories" of the resulting row should contain an array.
-   *  In case of App duplicates for all columns except categories, the remaining columns should have
-   *  the same values as the ones on the row with the maximum number of reviews.
+   * App unique value.
+   * In case of App duplicates, the column "Categories" of the resulting row should contain an array.
+   * In case of App duplicates for all columns except categories, the remaining columns should have
+   * the same values as the ones on the row with the maximum number of reviews.
+   *
    * @param apps googleplaystore.csv
    * @return df_3
    */
@@ -116,7 +117,7 @@ object Utils {
    * Given the Dataframes produced by Exercise 1 and 3,
    * produce a Dataframe with all its information plus its 'Average_Sentiment_Polarity' calculated in Exercise 1
    *
-   * @param dataFrame Result of exercise 3
+   * @param dataFrame         Result of exercise 3
    * @param dfAveragePolarity Result of exercise 1
    * @return df_3joined
    */
@@ -167,8 +168,6 @@ object Utils {
         dataFrame("Average_Sentiment_Polarity")
       )
 
-    genresExploded.show()
-
     genresExploded
       .groupBy("Genre")
       .agg(
@@ -184,4 +183,3 @@ object Utils {
       )
   }
 }
-
