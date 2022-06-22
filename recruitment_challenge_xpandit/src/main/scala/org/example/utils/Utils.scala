@@ -9,9 +9,9 @@
  */
 package org.example.utils
 
+import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.{DoubleType, LongType}
-import org.apache.spark.sql.DataFrame
 
 object Utils {
 
@@ -27,17 +27,17 @@ object Utils {
     .withColumn("Average_Sentiment_Polarity", col("Average_Sentiment_Polarity").cast(DoubleType))
     .na.fill(0)
 
-
   /**
    * Apps with a "Rating" greater or equal to 4.0 sorted in descending order.
    * Save that Dataframe as a CSV (delimiter: "§") named "best_apps.csv"
    *
-   * @param user_reviwws googleplaystore.csv
+   * @param user_reviws googleplaystore.csv
    * @return df_2
    */
-  def partTwo(user_reviwws: DataFrame): DataFrame = {
-    user_reviwws
-      .filter(user_reviwws("Rating") >= 4.0 && !isnan(user_reviwws("Rating")))
+  def partTwo(user_reviws: DataFrame): DataFrame = {
+    user_reviws
+      .withColumn("Rating", user_reviws("Rating").cast(DoubleType))
+      .filter(user_reviws("Rating") >= 4.0 && !isnan(user_reviws("Rating")))
       .orderBy(desc("Rating"))
   }
 
@@ -59,7 +59,13 @@ object Utils {
       .withColumnRenamed("Android Ver", "Minimum_Android_Version")
       .withColumn("Rating", regexp_replace(col("Rating"), "[NaN]", "null"))
       .withColumn("Rating", col("Rating").cast(DoubleType))
-      .withColumn("Last_Updated", to_date(col("last_updated"), "dd-MMM-yyyy")) //TODO
+      .withColumn("Last_Updated",
+        to_date(col("Last_updated"), "MMMM dd, yyyy")
+      )
+      .withColumn(
+        "Last_updated",
+        date_format(col("Last_updated"), "yyyy-MM-dd hh:mm:ss")
+      )
       .withColumn(
         "Minimum_Android_Version",
         regexp_replace(col("Minimum_Android_Version"), " and up", "")
@@ -182,4 +188,5 @@ object Utils {
         col("Average_Sentiment_Polarity")
       )
   }
+
 }

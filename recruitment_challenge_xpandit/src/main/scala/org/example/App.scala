@@ -8,7 +8,6 @@
  */
 package org.example
 
-
 import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
 import org.example.utils.Utils
 
@@ -19,6 +18,9 @@ object App extends App {
     .master("local[2]")
     .appName("RecruitmentChallenge")
     .getOrCreate()
+
+  //For date parsing
+  spark.sql("set spark.sql.legacy.timeParserPolicy=LEGACY")
 
   val user_reviews = spark
     .read
@@ -44,7 +46,7 @@ object App extends App {
     .write
     .mode(SaveMode.Overwrite)
     .option("header", value = true)
-    .option("delimiter", "§")
+    //.option("delimiter", "§")
     .format("csv")
     .save("src/main/scala/org/example/results/best_apps.csv")
 
@@ -60,7 +62,6 @@ object App extends App {
     .mode(SaveMode.Overwrite)
     .option("header", value = true)
     .parquet("src/main/scala/org/example/results/googleplaystore_cleaned")
-
 
   //Part 5
   val df_4 = Utils.partFive(df_3joined)
